@@ -20,7 +20,7 @@ namespace AdviesOpMaatASP.NET.Controllers
         public IActionResult Index()
         {
             OverzichtViewModel overzichtViewModel = new OverzichtViewModel();
-            vulProducten(overzichtViewModel);
+            AlleProducten(overzichtViewModel);
             vulCategorieen(overzichtViewModel);
 
             return View(overzichtViewModel);
@@ -50,7 +50,55 @@ namespace AdviesOpMaatASP.NET.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private void vulProducten(OverzichtViewModel model)
+        public IActionResult DeleteProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(BeheerViewModel model)
+        {
+            Product product = new Product(model.geselecteerdeProduct.id, model.geselecteerdeProduct.Naam, model.geselecteerdeProduct.Prijs);
+
+            try
+            {
+                productRepo.DeleteProduct(product);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Product succesvol verwijderd!');</script>";
+            return RedirectToAction(""); // nog in te vullen
+        }
+        public IActionResult UpdateProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProduct(BeheerViewModel model)
+        {
+            Product product = new Product(model.geselecteerdeProduct.id, model.geselecteerdeProduct.Naam, model.geselecteerdeProduct.Prijs);
+
+            try
+            {
+                productRepo.UpdateProduct(product);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Product succesvol geüpdatet!');</script>";
+            return RedirectToAction(""); // nog in te vullen
+        }
+
+
+        private void AlleProducten(OverzichtViewModel model)
         {
             model.Producten = productRepo.AlleProducten();
 

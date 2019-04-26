@@ -19,6 +19,14 @@ namespace AdviesOpMaatASP.NET.Repositories
         {
             _context.AddProduct(product);
         }
+        public void DeleteProduct(Product product)
+        {
+            _context.DeleteProduct(product);
+        }
+        public void UpdateProduct(Product product)
+        {
+            _context.UpdateProduct(product);
+        }
 
         public List<Product> AlleProducten()
         {
