@@ -17,6 +17,15 @@ namespace AdviesOpMaatASP.NET.Controllers
         ProductRepo productRepo = new ProductRepo(new ProductContext());
         CategorieRepo categorieRepo = new CategorieRepo(new CategorieContext());
 
+        public IActionResult Beheer()
+        {
+            BeheerViewModel beheerViewModel = new BeheerViewModel();
+            AlleProducten(beheerViewModel);
+            //vulCategorieen(beheerViewModel);
+
+            return View(beheerViewModel);
+        }
+
         public IActionResult Index()
         {
             OverzichtViewModel overzichtViewModel = new OverzichtViewModel();
@@ -25,7 +34,7 @@ namespace AdviesOpMaatASP.NET.Controllers
 
             return View(overzichtViewModel);
         }
-        [Authorize(Policy = "MustBeAdmin")]
+        //[Authorize(Policy = "MustBeAdmin")]
         public IActionResult AddProduct()
         {
             return View();
@@ -97,6 +106,15 @@ namespace AdviesOpMaatASP.NET.Controllers
             return RedirectToAction(""); // nog in te vullen
         }
 
+        private void AlleProducten(BeheerViewModel model)
+        {
+            model.Producten = productRepo.AlleProducten();
+
+            foreach (Product p in model.Producten)
+            {
+                p.Categorieen = categorieRepo.CategorieenBijProduct(p.id);
+            }
+        }
 
         private void AlleProducten(OverzichtViewModel model)
         {
