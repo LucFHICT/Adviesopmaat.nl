@@ -1,0 +1,36 @@
+﻿@model AdviesOpMaatASP.NET.Models.RegistrerenViewModel
+@{
+    ViewData["Title"] = "Registreren";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Registreren</h1>
+
+<main style="min-height=100vh;">
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Registreren">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Gebruikersnaam" class="control-label"></label>
+                    <input asp-for="Gebruikersnaam" class="form-control" />
+                    <span asp-validation-for="Gebruikersnaam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Wachtwoord" class="control-label"></label>
+                    <input asp-for="Wachtwoord" class="form-control" />
+                    <span asp-validation-for="Wachtwoord" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Wachtwoord2" class="control-label"></label>
+                    <input asp-for="Wachtwoord2" class="form-control" />
+                    <span asp-validation-for="Wachtwoord2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Registreer" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,31 @@
+﻿@model AdviesOpMaatASP.NET.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Inloggen";
+}
+
+<h1>Inloggen</h1>
+<main style="min-height=100vh;">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Gebruikersnaam" class="control-label"></label>
+                    <input asp-for="Gebruikersnaam" class="form-control" />
+                    <span asp-validation-for="Gebruikersnaam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Wachtwoord" class="control-label"></label>
+                    <input asp-for="Wachtwoord" class="form-control" />
+                    <span asp-validation-for="Wachtwoord" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Inloggen" class="btn btn-default" />
+                </div>
+                <div>
+                    <a asp-area="" asp-controller="Email" asp-action="WachtwoordOpvragen">Wachtwoord vergeten</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
