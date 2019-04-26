@@ -10,6 +10,8 @@ namespace AdviesOpMaatASP.NET.Interfaces
     public interface IProduct
     {
         void AddProduct(Product product);
+        void DeleteProduct(Product product);
+        void UpdateProduct(Product product);
         List<Product> AlleProducten();
     }
 }

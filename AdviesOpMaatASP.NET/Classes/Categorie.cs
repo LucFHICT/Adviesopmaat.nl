@@ -9,10 +9,17 @@ namespace AdviesOpMaatASP.NET.Classes
     {
         string naam;
         string soort;
-        
+        public int categorieId { get; set; }
 
-        public Categorie(string naam, string soort)
+        public Categorie(string naam, string soort) // om categorie toe te voegen (nog geen id bekend)
         {
+            this.naam = naam;
+            this.soort = soort;
+        }
+
+        public Categorie(int id, string naam, string soort)
+        {
+            this.categorieId = id;
             this.naam = naam;
             this.soort = soort;
 

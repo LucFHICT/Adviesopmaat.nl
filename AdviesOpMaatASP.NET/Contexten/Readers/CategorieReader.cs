@@ -11,7 +11,7 @@ namespace AdviesOpMaatASP.NET.Contexten.Readers
     {
         public Categorie createCategorieFromReader(IDataReader reader)
         {
-            Categorie categorie = new Categorie(reader["CategorieNaam"].ToString(), reader["Soort"].ToString());
+            Categorie categorie = new Categorie((int)reader["CategorieId"], reader["CategorieNaam"].ToString(), reader["Soort"].ToString());
             return categorie;
         }
     }

@@ -43,5 +43,50 @@ namespace AdviesOpMaatASP.NET.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+        public IActionResult DeleteCategorie()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult DeleteCategorie(BeheerViewModel model)
+        {
+            Categorie categorie = new Categorie(model.geselecteerdeCategorie.categorieId, model.geselecteerdeCategorie.Naam, model.geselecteerdeCategorie.Soort);
+
+            try
+            {
+                repo.DeleteCategorie(categorie);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Categorie succesvol verwijderd!');</script>";
+            return RedirectToAction(""); // nog in te vullen
+        }
+
+        public IActionResult UpdateCategorie()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult UpdateCategorie(BeheerViewModel model)
+        {
+            Categorie categorie = new Categorie(model.geselecteerdeCategorie.categorieId, model.geselecteerdeCategorie.Naam, model.geselecteerdeCategorie.Soort);
+
+            try
+            {
+                repo.UpdateCategorie(categorie);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Categorie succesvol geüpdatet!');</script>";
+            return RedirectToAction(""); // nog in te vullen
+        }
     }
 }

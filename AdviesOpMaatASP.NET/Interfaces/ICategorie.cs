@@ -10,7 +10,10 @@ namespace AdviesOpMaatASP.NET.Interfaces
     public interface ICategorie
     {
         void AddCategorie(Categorie categorie);
+        void DeleteCategorie(Categorie categorie);
+        void UpdateCategorie(Categorie categorie);
         List<Categorie> CategorieenBijProduct(int productID);
         List<Categorie> AlleCategorieen();
+
     }
 }

@@ -38,6 +38,56 @@ namespace AdviesOpMaatASP.NET.Contexten
                 CloseConnection();
             }
         }
+        public void DeleteCategorie(Categorie categorie)
+        {
+            try
+            {
+                if (OpenConnection())
+                {
+                    SqlCommand cmd = new SqlCommand(
+                        "exec DeleteCategorie @CategorieId", Connection);
+
+                    cmd.Parameters.AddWithValue("@CategorieId", categorie.categorieId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        public void UpdateCategorie(Categorie categorie)
+        {
+            try
+            {
+                if (OpenConnection())
+                {
+                    SqlCommand cmd = new SqlCommand(
+                        "exec UpdateCategorie @CategorieId, @Naam, @Soort", Connection);
+
+                    cmd.Parameters.AddWithValue("@CategorieId", categorie.categorieId);
+                    cmd.Parameters.AddWithValue("@Naam", categorie.Naam);
+                    cmd.Parameters.AddWithValue("@Soort", categorie.Soort);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
 
         public List<Categorie> CategorieenBijProduct(int productId)
         {
@@ -71,7 +121,6 @@ namespace AdviesOpMaatASP.NET.Contexten
 
             return categorieen;
         }
-
         public List<Categorie> AlleCategorieen()
         {
             List<Categorie> categorieen = new List<Categorie>();

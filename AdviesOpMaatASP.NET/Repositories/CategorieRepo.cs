@@ -14,10 +14,18 @@ namespace AdviesOpMaatASP.NET.Repositories
         {
             _context = context;
         }
-        
+
         public void AddCategorie(Categorie categorie)
         {
             _context.AddCategorie(categorie);
+        }
+        public void DeleteCategorie(Categorie categorie)
+        {
+            _context.DeleteCategorie(categorie);
+        }
+        public void UpdateCategorie(Categorie categorie)
+        {
+            _context.UpdateCategorie(categorie);
         }
 
         public List<Categorie> CategorieenBijProduct(int productId)
@@ -28,5 +36,6 @@ namespace AdviesOpMaatASP.NET.Repositories
         {
             return _context.AlleCategorieen();
         }
+
     }
 }
