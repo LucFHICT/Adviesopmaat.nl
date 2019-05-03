@@ -29,7 +29,7 @@ namespace AdviesOpMaatASP.NET.Contexten.Readers
         }
         public Antwoordoptie createAntwoordoptieFromReader(IDataReader reader)
         {
-            Antwoordoptie antwoordoptie = new Antwoordoptie(reader["Antwoord"].ToString(), categorieReader.createCategorieFromReader(reader);
+            Antwoordoptie antwoordoptie = new Antwoordoptie(reader["Antwoord"].ToString(), categorieReader.createCategorieFromReader(reader));
             return antwoordoptie;
         }
     }

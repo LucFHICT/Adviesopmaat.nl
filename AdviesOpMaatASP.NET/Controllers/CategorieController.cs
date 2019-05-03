@@ -88,5 +88,8 @@ namespace AdviesOpMaatASP.NET.Controllers
             TempData["Message"] = "<script>alert('Categorie succesvol geüpdatet!');</script>";
             return RedirectToAction(""); // nog in te vullen
         }
+
+
+
     }
 }
