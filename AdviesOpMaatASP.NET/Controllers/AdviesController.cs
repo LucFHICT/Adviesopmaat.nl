@@ -13,6 +13,8 @@ namespace AdviesOpMaatASP.NET.Controllers
 {
     public class AdviesController : Controller
     {
+
+
         // vindProducten 'omdraaien'; cat op checklist laten staan ipv eraf halen om te onthouden welke overeenkomst er is???
         private List<GeschiktProduct> vindProducten(Intake intake)                                        // methode wordt aangeroepen door maakAdvies()
         {

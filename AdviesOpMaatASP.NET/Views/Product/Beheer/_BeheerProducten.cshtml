@@ -1,0 +1,131 @@
+﻿@model AdviesOpMaatASP.NET.Models.BeheerViewModel;
+@using AdviesOpMaatASP.NET.Classes;
+
+<div class="container">
+    <h2>Alle producten</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add product</button><br /><br />
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Naam
+                </th>
+                <th>
+                    Prijs
+                </th>
+                <th>
+                    Actie
+                </th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+
+            @foreach (Product p in Model.Producten)
+            {
+                <tr>
+                    <td>@p.Naam</td>
+                    <td>@p.Prijs</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" id="btnUpdate">Update</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" id="btnDelete">Delete</button>
+                    </td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="addModalLabel">Voeg product toe</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Naam">Naam</label>
+                        <input type="text" class="form-control" id="Naam" placeholder="Id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Prijs">Prijs</label>
+                        <input type="text" class="form-control" id="Prijs" placeholder="Prijs" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAdd">Add</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">Update een product</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="UpdateProduct" asp-controller="Product" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="geselecteerdeProduct.Naam" class="control-label"></label>
+                        <input asp-for="geselecteerdeProduct.Naam" class="form-control" />
+                        <span asp-validation-for="geselecteerdeProduct.Naam" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="geselecteerdeProduct.Prijs" class="control-label"></label>
+                        <input asp-for="geselecteerdeProduct.Prijs" class="form-control" />
+                        <span asp-validation-for="geselecteerdeProduct.Prijs" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+
+
+                @*<form asp-action="UpdateProduct" >
+                        <div class="form-group">
+                            <label for="Naam">Naam</label>
+                            <input type="text" class="form-control" id="Naam" placeholder="Id" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Prijs">Prijs</label>
+                            <input type="text" class="form-control" id="Prijs" placeholder="Prijs" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="btnEdit" onclick="@Url.Action("UpdateProduct","Product")">Update</button>
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">Update een product</h4>
+            </div>
+            <div class="modal-body">
+                <p>Weet je zeker dat het product verwijderd moet worden?</p>
+                <form asp-action="DeleteProduct" asp-controller="Product" method="post">
+                    <button type="submit" class="btn btn-danger" id="btnDelete" onclick="@Url.Action("DeleteProduct","Product")">Delete</button>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
