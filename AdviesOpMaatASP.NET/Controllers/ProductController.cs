@@ -130,7 +130,7 @@ namespace AdviesOpMaatASP.NET.Controllers
         [HttpGet]
         private IActionResult openEdit(BeheerViewModel model, int productId)
         {
-            //call naar repo om product op te halen
+            //call naar repo om product op te halen? of zet simpelweg juiste object over
             model.geselecteerdeProduct = model.Producten[productId - 1];
             return View(model);
         }
