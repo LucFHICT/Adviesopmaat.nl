@@ -3,7 +3,7 @@
 
 <div class="container">
     <h2>Alle producten</h2>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add product</button><br /><br />
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add product</button>
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -22,19 +22,20 @@
 
             @foreach (Product p in Model.Producten)
             {
-                <tr>
-                    <td>@p.Naam</td>
+                <tr onclick="productKiezen(@p.id)" id="product+'p.id'" >
+                    <td><a>@p.Naam</a></td>
                     <td>@p.Prijs</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" id="btnUpdate">Update</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal"  onclick="productId('@p.id')" id="@p.id">Update</button>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" id="btnDelete">Delete</button>
                     </td>
                 </tr>
             }
-            }
+            
         </tbody>
     </table>
 </div>
+
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -121,7 +122,7 @@
             <div class="modal-body">
                 <p>Weet je zeker dat het product verwijderd moet worden?</p>
                 <form asp-action="DeleteProduct" asp-controller="Product" method="post">
-                    <button type="submit" class="btn btn-danger" id="btnDelete" onclick="@Url.Action("DeleteProduct","Product")">Delete</button>
+                    <button type="submit" class="btn btn-danger" id="btnDelete" onclick="@Url.Action("DeleteProduct", "Product")">Delete</button>
 
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </form>
@@ -129,3 +130,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    var productId;
+
+    function productKiezen(id) {
+        productId = id;
+        alert(productId); // werkt
+       //{Model.geselecteerdeProduct = Model.Producten[lambda die productId vind in lijst]}; producten zijn al opgehaald, kan ik die niet gewoon overzetten? in viewmodel?
+        $("productKiezen").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Product/Beheer/openEdit", // hit geen breakpoint in controller
+                data: @Model + productId,
+                succes: alert(@Model.geselecteerdeProduct.id), // is wel succesvol en returned 0 (niet geset)?
+                error: alert("Niet gelukt")
+            })
+        })
+    }
+    
+        
+  
+</script>

@@ -125,6 +125,21 @@ namespace AdviesOpMaatASP.NET.Controllers
                 p.Categorieen = categorieRepo.CategorieenBijProduct(p.id);
             }
         }
+
+
+        [HttpGet]
+        private IActionResult openEdit(BeheerViewModel model, int productId)
+        {
+            //call naar repo om product op te halen
+            model.geselecteerdeProduct = model.Producten[productId - 1];
+            return View(model);
+        }
+
+
+
+
+
+
         private void vulCategorieen(OverzichtViewModel model) 
         {
             model.Categorieen = categorieRepo.AlleCategorieen();
