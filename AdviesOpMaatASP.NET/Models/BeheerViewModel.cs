@@ -12,9 +12,9 @@ namespace AdviesOpMaatASP.NET.Models
         public List<Product> Producten { get; set; }
         public Categorie geselecteerdeCategorie { get; set; }
         public Product geselecteerdeProduct { get; set; }
+        public int geselecteerdProductId { get; set; }
         public BeheerViewModel()
         {
-            geselecteerdeProduct = new Product(0, "", 0);
         }
     }
 }

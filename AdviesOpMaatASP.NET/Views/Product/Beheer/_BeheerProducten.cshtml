@@ -22,7 +22,7 @@
 
             @foreach (Product p in Model.Producten)
             {
-                <tr onclick="productKiezen(@p.id)" id="product+'p.id'" >
+                <tr onclick= "productKiezen(@p.id)" id="product+'p.id'" >
                     <td><a>@p.Naam</a></td>
                     <td>@p.Prijs</td>
                     <td>
@@ -137,18 +137,29 @@
     function productKiezen(id) {
         productId = id;
         alert(productId); // werkt
+
+    
        //{Model.geselecteerdeProduct = Model.Producten[lambda die productId vind in lijst]}; producten zijn al opgehaald, kan ik die niet gewoon overzetten? in viewmodel?
-        $("productKiezen").click(function () {
+
+        @*$("productKiezen").click(function () {
+          //  @Model.geselecteerdProductId = id;
             $.ajax({
-                type: "GET",
-                url: "/Product/Beheer/openEdit", // hit geen breakpoint in controller
-                data: @Model + productId,
-                succes: alert(@Model.geselecteerdeProduct.id), // is wel succesvol en returned 0 (niet geset)?
-                error: alert("Niet gelukt")
-            })
+                type: "POST",
+                url: "/Product/openEdit", // hit geen breakpoint in controller
+                data: {@Model},
+                
+            })*@
         })
     }
-    
+
+    $("#productkiezen").click(function () {
+        
+        $.ajax({
+            type: "POST",
+            url: "/Product/openEdit",
+            data: {@Model}
+        });
+    });
         
   
 </script>
