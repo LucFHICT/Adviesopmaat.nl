@@ -9,6 +9,7 @@ namespace AdviesOpMaatASP.NET.Interfaces
 {
     public interface IIntake
     {
+        List<Antwoordoptie> getAntwoord(List<int> AntwoordoptieIDs);
         List<Vraag> AlleVragen();
 
     }

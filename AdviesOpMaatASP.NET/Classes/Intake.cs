@@ -8,14 +8,14 @@ namespace AdviesOpMaatASP.NET.Classes
     public class Intake
     {
         public Gebruiker Gebruiker { get; set; }
+        public string Email { get; set; }
         public Antwoord Antwoord { get; set; }
         public List<Vraag> Vragen { get; set; }
         public bool Geavenceerd { get; set; }
 
-        public Intake(Gebruiker gebruiker, bool geavenceerd)
+public Intake()
         {
-            Gebruiker = gebruiker ?? throw new ArgumentNullException(nameof(gebruiker));
-            Geavenceerd = geavenceerd;
+
         }
     }
 }

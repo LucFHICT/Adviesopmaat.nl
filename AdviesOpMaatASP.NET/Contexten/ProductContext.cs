@@ -6,12 +6,14 @@ using AdviesOpMaatASP.NET.Interfaces;
 using AdviesOpMaatASP.NET.Classes;
 using System.Data.SqlClient;
 using AdviesOpMaatASP.NET.Readers;
+using AdviesOpMaatASP.NET.Contexten.Readers;
 
 namespace AdviesOpMaatASP.NET.Contexten
 {
     public class ProductContext : DBContext, IProduct
     {
         readonly ProductReader productReader = new ProductReader();
+        readonly CategorieReader categorieReader = new CategorieReader();
 
         public void AddProduct(Product product)
         {
@@ -91,7 +93,6 @@ namespace AdviesOpMaatASP.NET.Contexten
         public List<Product> AlleProducten()
         {
             List<Product> producten = new List<Product>();
-            List<Categorie> categorieenBijProduct = new List<Categorie>();
             try
             {
                 if (OpenConnection())
@@ -106,6 +107,24 @@ namespace AdviesOpMaatASP.NET.Contexten
                             }
                         }
                     }
+
+                    foreach (Product p in producten)
+                    {
+                        p.Categorieen = new List<Categorie>();
+                        using (SqlCommand cmd = new SqlCommand("SELECT * FROM GetCategorieenByProductId (@ProductId)", Connection))
+                        {
+                            cmd.Parameters.AddWithValue("@ProductId", p.id);
+
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    p.Categorieen.Add(categorieReader.createCategorieFromReader(reader));
+                                }
+                            }
+                        }   
+                    }
+
                 }
             }
             catch (Exception ex)

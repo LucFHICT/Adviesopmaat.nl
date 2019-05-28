@@ -129,12 +129,16 @@ namespace AdviesOpMaatASP.NET.Controllers
 
         [HttpPost]
         private IActionResult openEdit(BeheerViewModel model)
-        {
+        {   
             //call naar repo om product op te halen? of zet simpelweg juiste object over
             
             return View(model);
         }
 
+        public IActionResult openPartial(string naam)
+        {
+            return PartialView("~/Product/Beheer/_Beheer" + naam);
+        }
 
 
 

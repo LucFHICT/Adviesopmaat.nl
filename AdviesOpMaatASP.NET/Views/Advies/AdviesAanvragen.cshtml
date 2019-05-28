@@ -1,0 +1,37 @@
+﻿@model AdviesOpMaatASP.NET.Models.AdviesViewModel
+@using AdviesOpMaatASP.NET.Classes;
+@{
+    ViewData["Title"] = "AdviesAanvragen";
+}
+
+<h1>AdviesAanvragen</h1>
+
+<div>
+    <form asp-action="vindProducten">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="intake.Email" class="control-label"></label>
+            <input asp-for="intake.Email" class="form-control" />
+            <span asp-validation-for="intake.Email" class="text-danger"></span>
+        </div>
+        @foreach (Vraag v in Model.intake.Vragen)
+        {
+        <div>
+            <p1>@v.VraagTekst</p1>
+            <div>
+                <select asp-for="geselecteerdeAO">
+
+                    @foreach (Antwoordoptie ao in v.Antwoordopties)
+                    {
+                        <option id="@ao.Id" value="@ao.Id">@ao.Antwoord</option>
+                    }
+                </select>
+            </div>
+        </div>
+        }
+        <div class="form-group">
+            <input type="submit" value="Geef advies" class="btn btn-default" />
+        </div>
+    </form>
+</div>
+

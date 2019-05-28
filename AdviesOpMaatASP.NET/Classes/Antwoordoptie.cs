@@ -7,11 +7,13 @@ namespace AdviesOpMaatASP.NET.Classes
 {
     public class Antwoordoptie
     {
+        public int Id { get; set; }
         public string Antwoord { get; set; }
         public Categorie Categorie { get; set; }
 
-        public Antwoordoptie(string antwoord, Categorie categorie)
+        public Antwoordoptie(int id, string antwoord, Categorie categorie)
         {
+            Id = id;
             Antwoord = antwoord;
             Categorie = categorie;
         }

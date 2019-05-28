@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AdviesOpMaatASP.NET</title>
+    <title>@ViewData["Title"] - AdviesOpMaat</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -32,17 +32,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Gebruiker" asp-action="Inloggen">Inloggen</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Advies" asp-action="AdviesAanvragen">Advies aanvragen</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Product toevoegen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Test producten</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Beheer">Beheer</a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Beheer">Adminbeheer</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="loginText" asp-controller="Gebruiker" asp-action="Uitloggen" method="get">Uitloggen</a>
+                        }
+                        else
+                        {
+                            <a class="loginText" asp-controller="Gebruiker" asp-action="Inloggen" method="get">Inloggen</a>
+                        }
+
                     </ul>
                 </div>
             </div>

@@ -4,38 +4,78 @@
 }
 
 
-<main style="min-height=100vh;">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <a href="#tabProduct" class="nav-tabs-dropdown btn btn-block btn-primary" data-toggle="tab">Producten</a>
-                <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
-                    <li class="active"><a href="#tabProduct" data-toggle="tab">Producten</a></li>
-                    <li><a href="#tabCategorie" data-toggle="tab">Categorieën</a></li>
-                    <li><a href="#tabVraag" data-toggle="tab">Vragen</a></li>
-                    <li><a href="#tabGebruiker" data-toggle="tab">Gebruikers</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-9">
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="tabProduct">
-                        <h3>Productbeheer</h3>
-                        @Html.Partial("Beheer/_BeheerProducten")
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="tabCategorie">
-                        <h3>Categoriebeheer</h3>
-                        @Html.Partial("Beheer/_BeheerCategorieen")
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="tabVraag">
-                        <h3>Categoriebeheer</h3>
-                        @Html.Partial("Beheer/_BeheerVragen")
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="tabGebruiker">
-                        <h3>Categoriebeheer</h3>
-                        @Html.Partial("Beheer/_BeheerGebruikers")
+@if (User.IsInRole("Admin"))
+{
+    <main style="min-height=100vh;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="#tabProduct" class="nav-tabs-dropdown btn btn-block btn-primary" data-toggle="tab" onclick="LoadPartialView()">Producten</a>
+                    <a href="#tabCategorie" class="nav-tabs-dropdown btn btn-block btn-primary" data-toggle="tab">Categorieën</a>
+                    <a href="#tabVraag" class="nav-tabs-dropdown btn btn-block btn-primary" data-toggle="tab">Vragen</a>
+                    <a href="#tabGebruiker" class="nav-tabs-dropdown btn btn-block btn-primary" data-toggle="tab">Gebruikers</a>
+                </div>
+                <div class="col-sm-9">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="tabProduct">
+                            <h3>Productbeheer</h3>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tabCategorie">
+                            <h3>Categoriebeheer</h3>
+                            @Html.Partial("Beheer/_BeheerCategorieen")
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tabVraag">
+                            <h3>Vraagbeheer</h3>
+                            @Html.Partial("Beheer/_BeheerVragen")
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tabGebruiker">
+                            <h3>Gebruikerbeheer</h3>
+                            @Html.Partial("Beheer/_BeheerGebruikers")
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+}
+else
+{
+    <p>U heeft niet de juiste rechten voor deze pagina</p>
+}
+<div id="pv"></div>
+
+<script type="text/javascript">
+    $("#pv").load("/Product/openPartial?naam=Product");
+</script>
+
+@*<script type="text/javascript">
+    $(function load() {
+        LoadPartialView();
+    }
+    );
+
+
+
+    function LoadPartialView() {
+        var myDiv = $('#pv');
+        $.ajax({
+            url: myDiv.data('Beheer/_BeheerProducten'),
+            type: 'GET',
+            cache: false,
+            context: myDiv,
+            success: function (result) {
+                this.html(result);
+            }
+        });
+
+    }
+
+    $(document).ajaxStart(function () {
+        $("#loading").show();
+    });
+
+    $(document).ajaxComplete(function () {
+        $("#loading").hide();
+    });
+</script>*@

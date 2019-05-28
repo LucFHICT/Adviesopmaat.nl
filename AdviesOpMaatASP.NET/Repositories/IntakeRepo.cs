@@ -18,5 +18,9 @@ namespace AdviesOpMaatASP.NET.Repositories
         {
             return _context.AlleVragen();
         }
+        public List<Antwoordoptie> getAntwoord(List<int> AntwoordoptieIDs)
+        {
+            return _context.getAntwoord(AntwoordoptieIDs);
+        }
     }
 }

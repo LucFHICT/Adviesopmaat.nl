@@ -13,9 +13,48 @@ namespace AdviesOpMaatASP.NET.Contexten
     {
         readonly IntakeReader intakeReader = new IntakeReader();
 
+        public List<Antwoordoptie> getAntwoord(List<int> AntwoordoptieIds)
+        {
+            List<Antwoordoptie> antwoordopties = new List<Antwoordoptie>();
+            try
+            {
+                if (OpenConnection())
+                {
+                    foreach (int i in AntwoordoptieIds)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("SELECT * FROM GetAntwoordoptie (@AOId)", Connection))
+                        {
+                            cmd.Parameters.AddWithValue("@AOId", i);
+
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    antwoordopties.Add(intakeReader.createAntwoordoptieFromReader(reader));
+                                }
+                            }
+                        }
+                    }
+                }
+            }  
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
+}
+
+            return antwoordopties;
+
+        }
+
         public List<Vraag> AlleVragen()
         {
             List<Vraag> vragen = new List<Vraag>();
+            
             try
             {
                 if (OpenConnection())
@@ -33,6 +72,7 @@ namespace AdviesOpMaatASP.NET.Contexten
 
                     foreach (Vraag vraag in vragen)
                     {
+                        vraag.Antwoordopties = new List<Antwoordoptie>();
                         using (SqlCommand cmd = new SqlCommand("SELECT * FROM GetAntwoordopties (@VraagId)", Connection))
                         {
                             cmd.Parameters.AddWithValue("@VraagId", vraag.VraagId);

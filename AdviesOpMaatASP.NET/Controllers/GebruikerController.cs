@@ -50,6 +50,13 @@ namespace AdviesOpMaatASP.NET.Controllers
             return View();
         }
 
+
+        
+        public async Task<IActionResult> Uitloggen()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
         
         public IActionResult Inloggen()
         {

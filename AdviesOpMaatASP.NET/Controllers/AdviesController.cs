@@ -13,15 +13,25 @@ namespace AdviesOpMaatASP.NET.Controllers
 {
     public class AdviesController : Controller
     {
+        ProductRepo productRepo = new ProductRepo(new ProductContext());
+        IntakeRepo intakeRepo = new IntakeRepo(new IntakeContext());
+        public IActionResult AdviesAanvragen()
+        {
+            AdviesViewModel model = new AdviesViewModel();
+            model.intake = new Intake();
+            model.intake.Vragen = intakeRepo.AlleVragen();
+            return View(model);
+        }
 
 
         // vindProducten 'omdraaien'; cat op checklist laten staan ipv eraf halen om te onthouden welke overeenkomst er is???
-        private List<GeschiktProduct> vindProducten(Intake intake)                                        // methode wordt aangeroepen door maakAdvies()
+        [HttpPost]
+        public IActionResult vindProducten(AdviesViewModel model)                                        // methode wordt aangeroepen door maakAdvies()
         {
             List<GeschiktProduct> geschikteProducten = new List<GeschiktProduct>();                        // maak lijst aan voor geschikte producten
 
-            List<Product> alleProducten = null;// PAS OP: productrepo aanroepen AlleProducten();                      // haal alle producten op
-            Antwoord antwoord = intake.Antwoord;                                                           // haal gekozen antwoorden door klant op
+            List<Product> alleProducten = productRepo.AlleProducten();                                // haal alle producten op
+            Antwoord antwoord = new Antwoord(intakeRepo.getAntwoord(model.geselecteerdeAO));            // haal gekozen antwoorden door klant op
 
             List<Categorie> eisCategorie = new List<Categorie>();                                          //instantieer lijst om eisen klant in te zetten
 
@@ -39,8 +49,11 @@ namespace AdviesOpMaatASP.NET.Controllers
 
                 foreach (Categorie ca in categorieenBijProduct)                                         // check bij iedere categorie(product) of deze voorkomt op vergelijkingslijst 
                 {
-                    int indexToRemove = eisCategorie.IndexOf(eisCategorie.SingleOrDefault(cat => cat.Naam == categorieenBijProduct.Find(c => c.Naam == ca.Naam).Naam));
-                                                                                                         // indien categorie gevonden (obv naam), set een int om de index te bepalen in vergelijkingslijst
+                    int indexToRemove = eisCategorie.IndexOf(                                            // indien categorie gevonden (obv naam), set een int om de index te bepalen in vergelijkingslijst
+                        eisCategorie.SingleOrDefault(
+                            cat => cat.Naam == categorieenBijProduct.Find(
+                                c => c.Naam == ca.Naam).Naam));
+                   
                     if (indexToRemove != -1)                                                            // als er geen categorie is gevonden, wordt er -1 returned
                     {
                         eisCategorie.RemoveAt(indexToRemove);                                           // verwijder overeenkomende categorie obv index
@@ -53,7 +66,9 @@ namespace AdviesOpMaatASP.NET.Controllers
                     geschikteProducten.Add(gp);
                 }
             }
-            return geschikteProducten;                                                                  // op deze manier werkt eisCategorie als een checklist waar eisen (categorieen) afgevinkt worden
+
+            return RedirectToAction("", "");                                                                // op deze manier werkt eisCategorie als een checklist waar eisen (categorieen) afgevinkt worden
         }
+
     }
 }

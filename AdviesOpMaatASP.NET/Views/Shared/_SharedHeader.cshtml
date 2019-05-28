@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+    <div class="header">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="loginText" asp-controller="Gebruiker" asp-action="Uitloggen" method="get">Uitloggen</a>
+            }
+            else
+            {
+                <a class="loginText" asp-controller="Gebruiker" asp-action="Inloggen" method="get">Login</a>
+            }
+            @if (User.Identity.ToString() == "Admin")
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Beheer">Adminbeheer</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+</body>
+</html>
