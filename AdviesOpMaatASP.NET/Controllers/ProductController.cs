@@ -19,20 +19,15 @@ namespace AdviesOpMaatASP.NET.Controllers
 
         public IActionResult Beheer()
         {
-            BeheerViewModel beheerViewModel = new BeheerViewModel();
-            AlleProducten(beheerViewModel);
-            //vulCategorieen(beheerViewModel);
+            BeheerViewModel model = new BeheerViewModel();
+            vulViewModel(model);
 
-            return View(beheerViewModel);
+            return View(model);
         }
 
         public IActionResult Index()
         {
-            OverzichtViewModel overzichtViewModel = new OverzichtViewModel();
-            AlleProducten(overzichtViewModel);
-            vulCategorieen(overzichtViewModel);
-
-            return View(overzichtViewModel);
+            return View();
         }
         //[Authorize(Policy = "MustBeAdmin")]
         public IActionResult AddProduct()
@@ -82,6 +77,7 @@ namespace AdviesOpMaatASP.NET.Controllers
             TempData["Message"] = "<script>alert('Product succesvol verwijderd!');</script>";
             return RedirectToAction(""); // nog in te vullen
         }
+
         public IActionResult UpdateProduct()
         {
             return View();
@@ -106,58 +102,31 @@ namespace AdviesOpMaatASP.NET.Controllers
             return RedirectToAction(""); // nog in te vullen
         }
 
-        private void AlleProducten(BeheerViewModel model)
-        {
-            model.Producten = productRepo.AlleProducten();
-
-            foreach (Product p in model.Producten)
-            {
-                p.Categorieen = categorieRepo.CategorieenBijProduct(p.id);
-            }
-        }
-
-        private void AlleProducten(OverzichtViewModel model)
-        {
-            model.Producten = productRepo.AlleProducten();
-
-            foreach (Product p in model.Producten)
-            {
-                p.Categorieen = categorieRepo.CategorieenBijProduct(p.id);
-            }
-        }
-
-
         [HttpPost]
-        private IActionResult openEdit(BeheerViewModel model)
-        {   
-            //call naar repo om product op te halen? of zet simpelweg juiste object over
-            
-            return View(model);
+        public IActionResult openPartial([FromBody] Message message, BeheerViewModel model)
+        {
+            vulViewModel(model);
+            string pad = "Beheer/_Beheer" + message.Naam;
+            return PartialView(pad, model);
         }
 
-        public IActionResult openPartial(string naam)
+        public class Message
         {
-            return PartialView("~/Product/Beheer/_Beheer" + naam);
+            public string Naam { get; set; }
         }
 
-
-
-
-
-        private void vulCategorieen(OverzichtViewModel model) 
+        private BeheerViewModel vulViewModel(BeheerViewModel model)
         {
+            model.Producten = productRepo.AlleProducten();
+
+            foreach (Product p in model.Producten)
+            {
+                p.Categorieen = categorieRepo.CategorieenBijProduct(p.id);
+            }
+
             model.Categorieen = categorieRepo.AlleCategorieen();
 
-            //ArtikelEnCategorieViewmodel ACViewmodel = aCViewmodel;                     << Indien viewmodel in een viewmodel zit(partials)
-                                                                                       
-            //ArtikelViewModel artikelViewModel = new ArtikelViewModel();                << Instantieer nieuwe viewmodels om te vullen 
-            //CategorieViewmodel categorieViewmodel = new CategorieViewmodel();
-
-            //artikelViewModel.artikelen = aCViewmodel.ArtikelViewModel.artikelen;       << Haalt artikelen uit een ander viewmodel, not sure waarom
-            //ACViewmodel.ArtikelViewModel = artikelViewModel;                           << Stel gelijk aan main-viewmodel
-
-            //categorieViewmodel.categorieen = artikelRepo.GetAllCategorie();            << Spreek repo aan voor data
-            //ACViewmodel.CategorieViewmodel = categorieViewmodel;
+            return model;
         }
 
     }

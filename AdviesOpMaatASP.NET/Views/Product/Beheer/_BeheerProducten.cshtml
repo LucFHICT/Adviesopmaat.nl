@@ -130,36 +130,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    var productId;
-
-    function productKiezen(id) {
-        productId = id;
-        alert(productId); // werkt
-
-    
-       //{Model.geselecteerdeProduct = Model.Producten[lambda die productId vind in lijst]}; producten zijn al opgehaald, kan ik die niet gewoon overzetten? in viewmodel?
-
-        @*$("productKiezen").click(function () {
-          //  @Model.geselecteerdProductId = id;
-            $.ajax({
-                type: "POST",
-                url: "/Product/openEdit", // hit geen breakpoint in controller
-                data: {@Model},
-                
-            })*@
-        })
-    }
-
-    $("#productkiezen").click(function () {
-        
-        $.ajax({
-            type: "POST",
-            url: "/Product/openEdit",
-            data: {@Model}
-        });
-    });
-        
-  
-</script>

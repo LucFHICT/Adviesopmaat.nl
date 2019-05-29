@@ -67,7 +67,7 @@ namespace AdviesOpMaatASP.NET.Controllers
                 }
             }
 
-            return RedirectToAction("", "");                                                                // op deze manier werkt eisCategorie als een checklist waar eisen (categorieen) afgevinkt worden
+            return RedirectToAction("", "");                                                             // op deze manier werkt eisCategorie als een checklist waar eisen (categorieen) afgevinkt worden
         }
 
     }
