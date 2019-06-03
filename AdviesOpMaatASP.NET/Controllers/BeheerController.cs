@@ -12,7 +12,7 @@ using AdviesOpMaatASP.NET.Repositories;
 
 namespace AdviesOpMaatASP.NET.Controllers
 {
-    public class ProductController : Controller
+    public class BeheerController : Controller
     {
         ProductRepo productRepo = new ProductRepo(new ProductContext());
         CategorieRepo categorieRepo = new CategorieRepo(new CategorieContext());
@@ -60,7 +60,7 @@ namespace AdviesOpMaatASP.NET.Controllers
         [HttpPost]
         public IActionResult DeleteProduct()
         {
-            BeheerViewModel model = HttpContext.Session.GetObject<BeheerViewModel>("beheerVM");
+            BeheerViewModel model = GetViewModel();
             Product product = new Product(model.geselecteerdeProduct.id, model.geselecteerdeProduct.Naam, model.geselecteerdeProduct.Prijs);
 
             try
@@ -74,7 +74,7 @@ namespace AdviesOpMaatASP.NET.Controllers
             }
 
             TempData["Message"] = "<script>alert('Product succesvol verwijderd!');</script>";
-            return RedirectToAction("Beheer", "Product"); // nog in te vullen
+            return RedirectToAction("Beheer", "Beheer"); // nog in te vullen
         }
 
         public IActionResult UpdateProduct()
@@ -99,33 +99,117 @@ namespace AdviesOpMaatASP.NET.Controllers
                 throw;
             }
 
-            return RedirectToAction("Beheer", "Product");
+            return RedirectToAction("Beheer", "Beheer");
+        }
+
+        public IActionResult AddCategorie()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddCategorie(BeheerViewModel model)
+        {
+            Categorie categorie = new Categorie(model.editCategorieNaam, model.editCategorieSoort);
+
+            try
+            {
+                categorieRepo.AddCategorie(categorie);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Categorie succesvol toegevoegd!');</script>";
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCategorie()
+        {
+            BeheerViewModel model = GetViewModel();
+            Categorie categorie = new Categorie(model.geselecteerdeCategorie.categorieId, model.geselecteerdeCategorie.Naam, model.geselecteerdeCategorie.Soort);
+
+            try
+            {
+                categorieRepo.DeleteCategorie(categorie);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Categorie succesvol verwijderd!');</script>";
+            return RedirectToAction("Beheer", "Beheer"); // nog in te vullen
+        }
+
+        public IActionResult UpdateCategorie()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult UpdateCategorie(BeheerViewModel model)
+        {
+            Categorie categorie = new Categorie(model.editCategorieNaam, model.editCategorieSoort);
+            model = GetViewModel();
+            categorie.categorieId = model.geselecteerdCategorieId;
+
+            try
+            {
+                categorieRepo.UpdateCategorie(categorie);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+
+            TempData["Message"] = "<script>alert('Categorie succesvol geüpdatet!');</script>";
+            return RedirectToAction("Beheer", "Beheer"); // nog in te vullen
         }
 
         [HttpPost]
         public IActionResult openPartial([FromBody] Message message)
         {
-            BeheerViewModel model = HttpContext.Session.GetObject<BeheerViewModel>("beheerVM");
-            string pad = "Beheer/_Beheer" + message.Naam;
+            BeheerViewModel model = GetViewModel();
+            string pad = "_Beheer" + message.Naam;
             return PartialView(pad, model);
         }
 
         [HttpPost]
         public IActionResult LoadProduct([FromBody] Message message)
         {
-            BeheerViewModel model = HttpContext.Session.GetObject<BeheerViewModel>("beheerVM");
+            BeheerViewModel model = GetViewModel();
             model.geselecteerdeProduct = model.Producten.Find(p => p.id == message.ProductId);
             model.geselecteerdProductId = message.ProductId;
             setViewModel(model);
 
-            string pad = "Beheer/_Product" + message.Actie;
+            string pad = "_Product" + message.Actie;
 
             return PartialView(pad, model);
         }
+
+        [HttpPost]
+        public IActionResult LoadCategorie([FromBody] Message message)
+        {
+            BeheerViewModel model = GetViewModel();
+            model.geselecteerdeCategorie = model.Categorieen.Find(c => c.categorieId == message.CategorieId);
+            model.geselecteerdCategorieId = message.CategorieId;
+            setViewModel(model);
+
+            string pad = "_Categorie" + message.Actie;
+
+            return PartialView(pad, model);
+        }
+
         public class Message
         {
             public string Naam { get; set; }
             public int ProductId { get; set; }
+            public int CategorieId { get; set; }
             public string Actie { get; set; }
         }
 

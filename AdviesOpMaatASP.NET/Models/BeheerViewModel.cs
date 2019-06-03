@@ -17,6 +17,9 @@ namespace AdviesOpMaatASP.NET.Models
         public string editProductNaam { get; set; }
         public int editProductPrijs { get; set; }
         public IEnumerable<int> categorieenIdBijProduct { get; set; }
+        public string editCategorieNaam { get; set; }
+        public string editCategorieSoort { get; set; }
+        public int geselecteerdCategorieId { get; set; }
         public BeheerViewModel()
         {
         }

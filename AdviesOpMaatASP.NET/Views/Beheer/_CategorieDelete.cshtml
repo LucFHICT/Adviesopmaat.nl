@@ -1,12 +1,12 @@
 ﻿@model AdviesOpMaatASP.NET.Models.BeheerViewModel
 
 @{
-    ViewData["Title"] = "Delete Product";
+    ViewData["Title"] = "Delete categorie";
 }
 
 <div class="text-body">
-    <p>Weet je zeker dat @Model.geselecteerdeProduct.Naam verwijderd moet worden?</p>
-    <form asp-action="DeleteProduct" asp-controller="Product" method="post">
+    <p>Weet je zeker dat @Model.geselecteerdeCategorie.Naam verwijderd moet worden?</p>
+    <form asp-action="DeleteCategorie" asp-controller="Beheer" method="post">
         <button type="submit" class="btn btn-danger" id="btnDelete">Delete</button>
 
         <button type="button" class="btn btn-default" onclick="ClosePartial()">Close</button>

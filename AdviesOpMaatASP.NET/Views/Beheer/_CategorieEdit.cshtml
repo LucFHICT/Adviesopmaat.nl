@@ -1,0 +1,28 @@
+﻿
+@model AdviesOpMaatASP.NET.Models.BeheerViewModel
+
+@{
+    ViewData["Title"] = "Edit categorie";
+}
+
+
+<div class="text-body">
+    <form asp-action="UpdateCategorie" asp-controller="Beheer" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="geselecteerdeCategorie.Naam" class="control-label"></label>
+            <input asp-for="editCategorieNaam" value="@Model.geselecteerdeCategorie.Naam" class="form-control" />
+            <span asp-validation-for="editCategorieNaam" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="geselecteerdeCategorie.Soort" class="control-label"></label>
+            <input asp-for="editCategorieSoort" value="@Model.geselecteerdeCategorie.Soort" class="form-control" />
+            <span asp-validation-for="geselecteerdeCategorie.Soort" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Edit" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
