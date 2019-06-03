@@ -151,5 +151,45 @@ namespace AdviesOpMaatASP.NET.Contexten
 
             return categorieen;
         }
+        public List<Categorie> GetCategoriesById(List<int> CategorieIds)
+        {
+            List<Categorie> categorieen = new List<Categorie>();
+
+            try
+            {
+                if (OpenConnection())
+                {
+                    foreach (int i in CategorieIds)
+                    {
+                        using (SqlCommand cmd = new SqlCommand("SELECT * FROM GetCategorieByCategorieId(@CategorieId)", Connection))
+                        {
+                            cmd.Parameters.AddWithValue("@CategorieId", i);
+
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    categorieen.Add(categorieReader.createCategorieFromReader(reader));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToFile(ex);
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+
+            return categorieen;
+
+        }
     }
-}
+    }
+
+

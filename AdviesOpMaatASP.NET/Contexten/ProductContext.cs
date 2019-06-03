@@ -7,6 +7,7 @@ using AdviesOpMaatASP.NET.Classes;
 using System.Data.SqlClient;
 using AdviesOpMaatASP.NET.Readers;
 using AdviesOpMaatASP.NET.Contexten.Readers;
+using System.Data;
 
 namespace AdviesOpMaatASP.NET.Contexten
 {
@@ -17,17 +18,38 @@ namespace AdviesOpMaatASP.NET.Contexten
 
         public void AddProduct(Product product)
         {
+            int newProductId;
             try
             {
                 if (OpenConnection())
                 {
                     SqlCommand cmd = new SqlCommand(
-                        "exec AddProduct @Naam, @Prijs", Connection);
+                        "exec AddProduct @Naam, @PrijS", Connection);
 
                     cmd.Parameters.AddWithValue("@Naam", product.Naam);
                     cmd.Parameters.AddWithValue("@Prijs", product.Prijs);
+                    //cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int).Direction = ParameterDirection.Output;
+                    //var returnParameter = cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int);
+                    //returnParameter.Direction = ParameterDirection.ReturnValue;
 
-                    cmd.ExecuteNonQuery();
+                    object obj = cmd.ExecuteScalar();
+                    newProductId = Convert.ToInt32(obj);
+                    //using (SqlDataReader reader = cmd.ExecuteReader())
+                    //{
+                    //    while (reader.Read())
+                    //    {
+                    //        newProductId =  reader.GetInt32(0);
+                    //    }
+                    //}
+
+                    foreach (Categorie c in product.Categorieen)
+                    {
+                        SqlCommand cmd2 = new SqlCommand(
+                        "exec KoppelProductCategorie @ProductID, @CategorieID", Connection);
+                        cmd2.Parameters.AddWithValue("@ProductID", newProductId);
+                        cmd2.Parameters.AddWithValue("@CategorieID", c.categorieId);
+                        cmd2.ExecuteNonQuery();
+                    }
                 }
             }
             catch (Exception ex)

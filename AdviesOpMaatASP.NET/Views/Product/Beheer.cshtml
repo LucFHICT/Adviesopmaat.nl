@@ -9,16 +9,28 @@
     <main style="min-height=100vh;">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
-                    <button class="btn-primary"  onclick="LoadPartial('Producten')">Producten</button>
-                    <button class="btn-primary"  onclick="LoadPartial('Categorieen')">Categorieën</button>
-                    <button class="btn-primary"  onclick="LoadPartial('Vragen')">Vragen</button>
-                    <button class="btn-primary"  onclick="LoadPartial('Gebruikers')">Gebruikers</button>
+                <div class="col-sm-2">
+                    <div>
+                        <button class="btn-primary" onclick="LoadPartial('Producten')">Producten</button>
+                    </div>
+                    <div>
+                        <button class="btn-primary" onclick="LoadPartial('Categorieen')">Categorieën</button>
+                    </div>
+                    <div>
+                        <button class="btn-primary" onclick="LoadPartial('Vragen')">Vragen</button>
+                    </div>
+                    <div>
+                        <button class="btn-primary" onclick="LoadPartial('Gebruikers')">Gebruikers</button>
+                    </div>
                 </div>
-                <div class="col-sm-9">
-                    <div id="pv"></div>
+                <div class="col-sm-5">
+                    <div id="pv" >
+                    </div>
                 </div>
-            </div>
+                <div class="col-sm-4">
+                    <div id="pv2"></div>
+                </div>
+                            </div>
         </div>
     </main>
 }
@@ -28,6 +40,11 @@ else
 }
 
 <script>
+
+    function ClosePartial() {
+        $('#pv2').empty();
+    }
+
     function LoadPartial(naam) {
 
         data = JSON.stringify(

@@ -36,6 +36,9 @@ namespace AdviesOpMaatASP.NET.Repositories
         {
             return _context.AlleCategorieen();
         }
-
+        public List<Categorie> GetCategoriesById(List<int> CategorieIds)
+        {
+            return _context.GetCategoriesById(CategorieIds);
+        }
     }
 }

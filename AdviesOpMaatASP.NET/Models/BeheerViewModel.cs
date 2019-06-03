@@ -10,9 +10,13 @@ namespace AdviesOpMaatASP.NET.Models
     {
         public List<Categorie> Categorieen { get; set; }
         public List<Product> Producten { get; set; }
+        public List<string> Soorten { get; set; }
         public Categorie geselecteerdeCategorie { get; set; }
         public Product geselecteerdeProduct { get; set; }
         public int geselecteerdProductId { get; set; }
+        public string editProductNaam { get; set; }
+        public int editProductPrijs { get; set; }
+        public IEnumerable<int> categorieenIdBijProduct { get; set; }
         public BeheerViewModel()
         {
         }

@@ -7,30 +7,32 @@ namespace AdviesOpMaatASP.NET.Classes
 {
     public class Categorie
     {
-        string naam;
-        string soort;
+        public string Naam { get; set; }
+        public string Soort { get; set; }
         public int categorieId { get; set; }
 
         public Categorie(string naam, string soort) // om categorie toe te voegen (nog geen id bekend)
         {
-            this.naam = naam;
-            this.soort = soort;
+            this.Naam = naam;
+            this.Soort = soort;
         }
 
         public Categorie(int id, string naam, string soort)
         {
             this.categorieId = id;
-            this.naam = naam;
-            this.soort = soort;
+            this.Naam = naam.Trim();
+            this.Soort = soort.Trim();
 
         }
 
-        public string Naam { get { return naam; } }
-        public string Soort { get { return soort; } }
+        public Categorie()
+        {
+
+        }
 
         public override string ToString()
         {
-            return soort + naam;
+            return Soort + Naam;
         }
     }
 }

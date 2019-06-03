@@ -14,6 +14,6 @@ namespace AdviesOpMaatASP.NET.Interfaces
         void UpdateCategorie(Categorie categorie);
         List<Categorie> CategorieenBijProduct(int productID);
         List<Categorie> AlleCategorieen();
-
+        List<Categorie> GetCategoriesById(List<int> CategorieIds);
     }
 }
