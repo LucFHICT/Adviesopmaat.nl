@@ -20,7 +20,7 @@ namespace AdviesOpMaatASP.NET.Controllers
         {
             BeheerViewModel model = new BeheerViewModel();
 
-            if(GetViewModel()!=null)
+            if(GetViewModel()==null)
             {
                 vulViewModel(model);
                 setViewModel(model);

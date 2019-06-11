@@ -28,19 +28,10 @@ namespace AdviesOpMaatASP.NET.Contexten
 
                     cmd.Parameters.AddWithValue("@Naam", product.Naam);
                     cmd.Parameters.AddWithValue("@Prijs", product.Prijs);
-                    //cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int).Direction = ParameterDirection.Output;
-                    //var returnParameter = cmd.Parameters.Add("@Id", System.Data.SqlDbType.Int);
-                    //returnParameter.Direction = ParameterDirection.ReturnValue;
-
+                    
                     object obj = cmd.ExecuteScalar();
                     newProductId = Convert.ToInt32(obj);
-                    //using (SqlDataReader reader = cmd.ExecuteReader())
-                    //{
-                    //    while (reader.Read())
-                    //    {
-                    //        newProductId =  reader.GetInt32(0);
-                    //    }
-                    //}
+                  
 
                     foreach (Categorie c in product.Categorieen)
                     {

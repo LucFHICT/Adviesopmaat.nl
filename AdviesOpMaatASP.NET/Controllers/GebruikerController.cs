@@ -92,7 +92,7 @@ namespace AdviesOpMaatASP.NET.Controllers
                         principal);
                     //de user is nu authenticated 
 
-                    if (identity.FindFirst(ClaimTypes.Role).Value == "Admin") // roltype uitgelezen uit cookie
+                    if (identity.FindFirst(ClaimTypes.Role).Value == "Admin") // roltype uitgelezen uit cookie (test)
                     {
                         return RedirectToAction("Privacy", "Home");
                     }
