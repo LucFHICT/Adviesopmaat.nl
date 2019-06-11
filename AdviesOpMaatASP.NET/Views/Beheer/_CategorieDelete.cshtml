@@ -6,7 +6,7 @@
 
 <div class="text-body">
     <p>Weet je zeker dat @Model.geselecteerdeCategorie.Naam verwijderd moet worden?</p>
-    <form asp-action="DeleteCategorie" asp-controller="Beheer" method="post">
+    <form asp-action="DeleteCategorie" asp-controller="Categorie" method="post">
         <button type="submit" class="btn btn-danger" id="btnDelete">Delete</button>
 
         <button type="button" class="btn btn-default" onclick="ClosePartial()">Close</button>

@@ -44,7 +44,7 @@
                 <h4 class="modal-title" id="addModalLabel">Voeg categorie toe</h4>
             </div>
             <div class="modal-body">
-                <form asp-action="AddCategorie" asp-controller="Beheer" method="post">
+                <form asp-action="AddCategorie" asp-controller="Categorie" method="post">
                     <div class="form-group">
                         <label asp-for="geselecteerdeCategorie.Naam" class="control-label"></label>
                         <input asp-for="editCategorieNaam" class="form-control" />
@@ -75,7 +75,7 @@
             });
 
         $.ajax({
-            url: "/Beheer/LoadCategorie",
+            url: "/Categorie/LoadCategorie",
             type: 'POST',
             cache: false,
             dataType: "html",
