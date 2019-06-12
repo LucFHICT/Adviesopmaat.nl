@@ -11,23 +11,18 @@ using AdviesOpMaatASP.NET.Repositories;
 
 namespace AdviesOpMaatASP.NET.Controllers
 {
-    public class CategorieController : Controller
+    public class CategorieController : BeheerController
     {
         CategorieRepo repo = new CategorieRepo(new CategorieContext());
-
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         public IActionResult AddCategorie()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult AddCategorie(AddCategorieViewModel model)
+        public IActionResult AddCategorie(BeheerViewModel model)
         {
-            Categorie categorie = new Categorie(model.Naam, model.Soort);
+            Categorie categorie = new Categorie(model.editCategorieNaam, model.editCategorieSoort);
 
             try
             {
@@ -39,17 +34,13 @@ namespace AdviesOpMaatASP.NET.Controllers
                 throw;
             }
 
-            TempData["Message"] = "<script>alert('Categorie succesvol toegevoegd!');</script>";
-            return RedirectToAction("Index", "Home");
-
+            return RedirectToAction("Beheer", "Beheer");
         }
+
+        [HttpPost]
         public IActionResult DeleteCategorie()
         {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult DeleteCategorie(BeheerViewModel model)
-        {
+            BeheerViewModel model = GetViewModel();
             Categorie categorie = new Categorie(model.geselecteerdeCategorie.categorieId, model.geselecteerdeCategorie.Naam, model.geselecteerdeCategorie.Soort);
 
             try
@@ -62,8 +53,7 @@ namespace AdviesOpMaatASP.NET.Controllers
                 throw;
             }
 
-            TempData["Message"] = "<script>alert('Categorie succesvol verwijderd!');</script>";
-            return RedirectToAction(""); // nog in te vullen
+            return RedirectToAction("Beheer", "Beheer");
         }
 
         public IActionResult UpdateCategorie()
@@ -74,6 +64,8 @@ namespace AdviesOpMaatASP.NET.Controllers
         public IActionResult UpdateCategorie(BeheerViewModel model)
         {
             Categorie categorie = new Categorie(model.geselecteerdeCategorie.categorieId, model.geselecteerdeCategorie.Naam, model.geselecteerdeCategorie.Soort);
+            model = GetViewModel();
+            categorie.categorieId = model.geselecteerdCategorieId;
 
             try
             {
@@ -85,23 +77,20 @@ namespace AdviesOpMaatASP.NET.Controllers
                 throw;
             }
 
-            TempData["Message"] = "<script>alert('Categorie succesvol geüpdatet!');</script>";
-            return RedirectToAction(""); // nog in te vullen
+            return RedirectToAction("Beheer", "Beheer"); 
         }
 
-        //private BeheerViewModel vulViewModel(BeheerViewModel model)
-        //{
-
-        //}
-
-        private BeheerViewModel GetViewModel()
+        [HttpPost]
+        public IActionResult LoadCategorie([FromBody] Message message)
         {
-            BeheerViewModel model = HttpContext.Session.GetObject<BeheerViewModel>("beheerVM");
-            return model;
-        }
-        private void setViewModel(BeheerViewModel model)
-        {
-            HttpContext.Session.SetObject("beheerVM", model);
+            BeheerViewModel model = GetViewModel();
+            model.geselecteerdeCategorie = model.Categorieen.Find(c => c.categorieId == message.CategorieId);
+            model.geselecteerdCategorieId = message.CategorieId;
+            setViewModel(model);
+
+            string pad = "_Categorie" + message.Actie;
+
+            return PartialView(pad, model);
         }
 
     }

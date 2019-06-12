@@ -15,7 +15,6 @@ namespace AdviesOpMaatASP.NET.Controllers
     public class BeheerController : Controller
     {
         
-
         public IActionResult Beheer()
         {
             BeheerViewModel model = new BeheerViewModel();
@@ -27,7 +26,7 @@ namespace AdviesOpMaatASP.NET.Controllers
             }
             else
             {
-                model = GetViewModel();
+                model = UpdateViewModel();
             }
 
             return View(model);
@@ -89,6 +88,17 @@ namespace AdviesOpMaatASP.NET.Controllers
         {
             BeheerViewModel model = HttpContext.Session.GetObject<BeheerViewModel>("beheerVM");
             return model;
+        }
+
+        public BeheerViewModel UpdateViewModel()
+        {
+            BeheerViewModel model = GetViewModel();
+            vulViewModel(model);
+            setViewModel(model);
+
+
+            return model;
+
         }
     }
 }

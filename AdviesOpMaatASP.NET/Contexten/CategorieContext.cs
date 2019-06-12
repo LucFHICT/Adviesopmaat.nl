@@ -15,6 +15,7 @@ namespace AdviesOpMaatASP.NET.Contexten
 
         public void AddCategorie(Categorie categorie)
         {
+            int newCategorieId;
             try
             {
                 if (OpenConnection())
@@ -25,7 +26,8 @@ namespace AdviesOpMaatASP.NET.Contexten
                     cmd.Parameters.AddWithValue("@Naam", categorie.Naam);
                     cmd.Parameters.AddWithValue("@Soort", categorie.Soort);
 
-                    cmd.ExecuteNonQuery();
+                    object obj = cmd.ExecuteScalar();
+                    newCategorieId = Convert.ToInt32(obj);
                 }
             }
             catch (Exception ex)
