@@ -8,6 +8,7 @@ namespace AdviesOpMaatASP.NET.Models
 {
     public class AdviesViewModel
     {
+        public Advies advies { get; set; }
         public Intake intake { get; set; }
         public List<int> geselecteerdeAO { get; set; }
         public int ao1 { get; set; }

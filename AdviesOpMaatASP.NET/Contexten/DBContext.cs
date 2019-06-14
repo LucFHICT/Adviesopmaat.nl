@@ -13,8 +13,8 @@ namespace AdviesOpMaatASP.NET
 
         public bool OpenConnection()
         {
-
-            string connectionString = "Server=aomdb.database.windows.net;Database=dbi273302;User Id=luc;Password=T0w8rv6.;";
+            string connectionString = "Server=mssql.fhict.local;Database=dbi273302;User Id=dbi273302;Password=luccabrit0;";
+            //string connectionString = "Server=aomdb.database.windows.net;Database=dbi273302;User Id=luc;Password=T0w8rv6.;";
 
             Connection = new SqlConnection(connectionString);
 

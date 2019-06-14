@@ -67,7 +67,10 @@ namespace AdviesOpMaatASP.NET.Controllers
                 }
             }
 
-            return RedirectToAction("", "");                                                             // op deze manier werkt eisCategorie als een checklist waar eisen (categorieen) afgevinkt worden
+            //geschikteProducten.Sort();
+            model.advies = new Advies(geschikteProducten, model.intake.Email);
+
+            return View("Adviesoverzicht", model);                                                             // op deze manier werkt eisCategorie als een checklist waar eisen (categorieen) afgevinkt worden
         }
 
     }

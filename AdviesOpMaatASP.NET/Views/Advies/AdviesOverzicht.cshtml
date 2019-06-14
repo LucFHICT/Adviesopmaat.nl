@@ -3,3 +3,39 @@
 @{
     ViewData["Title"] = "AdviesOverzicht";
 }
+<div class="card">
+    <div class="card-header">
+        Info
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Je intake</h5>
+        <p class="card-text">Er zijn @Model.advies.aanbevolenProducten.Count() producten gevonden </p>
+        <a href="#" class="btn btn-primary" onclick="toggle_producten()">Toon producten</a>
+    </div>
+</div>
+
+<div id="producten" class="flex-row" style ="display:none">
+    @foreach (GeschiktProduct p in Model.advies.aanbevolenProducten)
+    {
+        <div class="card">
+            <div class="card-header">
+                Product
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@p.Product.Naam</h5>
+                <p class="card-text">Dit product is met @p.aantalOvereenkomsten overeenkomst(en) uit het algoritme naar voren gekomen.</p>
+                <p>De prijs van @p.Product.Naam is €@p.Product.Prijs</p>
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+<!--
+    function toggle_producten(id) {
+        var e = document.getElementById('producten');
+        if (e.style.display == 'block')
+            e.style.display = 'none';
+        else
+            e.style.display = 'block';
+    }
+</script>
